@@ -1,0 +1,15 @@
+/lib/Adafruit_GFX/
+/lib/Adafruit_SSD1351/
+/lib/FastLED/
+/lib/SPI/
+/lib/cores
+/lib/cores/
+/lib/cores/*
+
+.idea/
+build/
+cmake-build-debug/
+cmake-build-build/
+
+*.o
+*.d
