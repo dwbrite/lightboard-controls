@@ -4,13 +4,6 @@
 
 #include <modes.h>
 
-void Sleep::altLeft() {}
-void Sleep::altClick() {}
-void Sleep::altRight() {}
-void Sleep::optLeft() {}
-void Sleep::optClick() {}
-void Sleep::optRight() {}
-
 void Sleep::setup(Adafruit_SSD1351 tft) {
     tft.fillScreen(BLACK);
     tft.setTextColor(RED);

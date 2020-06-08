@@ -15,15 +15,21 @@
 #include <colors.h>
 #include <FastLED.h>
 
+struct ModeInputInterface {
+    void (*singleClick)() = []{};
+    void (*doubleClick)() = []{};
+    void (*tripleClick)() = []{};
+    void (*longClick)() = []{};
+    void (*turnLeft)() = []{};
+    void (*turnRight)() = []{};
+    void (*turnLeftHeld)() = []{};
+    void (*turnRightHeld)() = []{};
+};
+
 class IMode {
 public:
-    virtual void optLeft() = 0;
-    virtual void optClick() = 0;
-    virtual void optRight() = 0;
-
-    virtual void altLeft() = 0;
-    virtual void altClick() = 0;
-    virtual void altRight() = 0;
+    ModeInputInterface opt;
+    ModeInputInterface alt;
 
     virtual void setup(Adafruit_SSD1351 tft) = 0;
     virtual void clear(Adafruit_SSD1351 tft) = 0;
@@ -41,15 +47,6 @@ public:
 
 class Sleep : public IMode {
     // no explicit constructor required
-
-    void optLeft();
-    void optClick();
-    void optRight();
-
-    void altLeft();
-    void altClick();
-    void altRight();
-
     void setup(Adafruit_SSD1351 tft);
     void clear(Adafruit_SSD1351 tft);
     void update(double dt);
@@ -60,14 +57,6 @@ class Sleep : public IMode {
 class SpinningRainbow : public IMode {
 public:
     SpinningRainbow(int x, int y, int w, int h, uint16_t bg);
-
-    void optLeft();
-    void optClick();
-    void optRight();
-
-    void altLeft();
-    void altClick();
-    void altRight();
 
     void setup(Adafruit_SSD1351 tft);
     void clear(Adafruit_SSD1351 tft);

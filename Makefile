@@ -25,6 +25,7 @@ COMPILERPATH ?= /usr/bin
 # CPPFLAGS = compiler options for C and C++
 CPPFLAGS = -Wall -g -O3 -mcpu=$(CPUARCH) -mthumb -MMD $(OPTIONS)
 CPPFLAGS += -Isrc -Isrc/modes -Isrc/util -Isrc/graphing -Ilib/cores/teensy3 -Ilib/SPI -Ilib/Adafruit_SSD1351 -Ilib/Adafruit_GFX -Ilib/FastLED
+CPPFLAGS += -Wl,-u,vfprintf -lprintf_flt -lm
 
 # compiler options for C++ only
 CXXFLAGS = -std=gnu++14 -felide-constructors -fno-exceptions -fno-rtti

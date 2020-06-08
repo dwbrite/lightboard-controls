@@ -53,26 +53,62 @@ SpinningRainbow::SpinningRainbow(int x, int y, int w, int h, uint16_t bg) {
     graphs.push_back(psin);
 
     graphIdx = 1;
+
+    // set up interface
+//    static auto turnLeft = [&]{
+//        for (auto f : this->graphs[this->graphIdx]->functions) {
+//            f->speed+=0.005;
+//        }
+//    };
+    static auto self = this;
+    alt.turnLeft = []{
+        for (auto f : self->graphs[self->graphIdx]->functions) {
+            f->speed+=0.005;
+        }
+    };
+
+    alt.turnLeftHeld = []{
+        for (auto f : self->graphs[self->graphIdx]->functions) {
+            f->speed+=0.005;
+        }
+    };
+
+
+    alt.turnRight = []{
+        for (auto f : self->graphs[self->graphIdx]->functions) {
+            f->speed-=0.005;
+        }
+    };
+
+    alt.turnRightHeld = []{
+        for (auto f : self->graphs[self->graphIdx]->functions) {
+            f->speed-=0.005;
+        }
+    };
+
+
+    alt.singleClick = []{
+        for (auto f : self->graphs[self->graphIdx]->functions) {
+            f->speed=0.0;
+        }
+    };
 }
 
-void SpinningRainbow::optLeft() {};
-void SpinningRainbow::optClick() {};
-void SpinningRainbow::optRight() {};
-void SpinningRainbow::altLeft() {
-    for (auto f : graphs[graphIdx]->functions) {
-        f->speed+=0.005;
-    }
-};
-void SpinningRainbow::altClick() {
-    for (auto f : graphs[graphIdx]->functions) {
-        f->speed=1;
-    }
-};
-void SpinningRainbow::altRight() {
-    for (auto f : graphs[graphIdx]->functions) {
-        f->speed-=0.005;
-    }
-};
+//void SpinningRainbow::optLeft() {};
+//void SpinningRainbow::optClick() {};
+//void SpinningRainbow::optRight() {};
+//void SpinningRainbow::altLeft() {
+//};
+//void SpinningRainbow::altClick() {
+//    for (auto f : graphs[graphIdx]->functions) {
+//        f->speed=1;
+//    }
+//};
+//void SpinningRainbow::altRight() {
+//    for (auto f : graphs[graphIdx]->functions) {
+//        f->speed-=0.005;
+//    }
+//};
 
 void SpinningRainbow::setup(Adafruit_SSD1351 tft) {
     uint16_t bg = 0x0;
@@ -160,5 +196,7 @@ void SpinningRainbow::showDebug(Adafruit_SSD1351 tft, double dt) {
     tft.fillRect(48, 118, 80, 8, 0);
     tft.setCursor(48, 118);
     auto f = graphs[graphIdx]->functions[0];
-    tft.printf("%d.%d, %d.%d", int(f->speed), int(100*fmod(f->speed, 1)), int(f->xOffset), int(100*fmod(f->xOffset, 1)));
+    char spd[16];
+    dtostrf( f->speed, 2, 3, spd);
+    tft.printf(spd);
 }
